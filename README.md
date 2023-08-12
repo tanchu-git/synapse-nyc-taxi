@@ -10,7 +10,7 @@ The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) wer
 ![260258628-c96324e3-f449-49e5-b22c-e500deeb7572](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/55d92ac5-c0c7-458a-b073-4fa59e9c0ff5)
 
 ## Synapse Workspace and Raw Dataset
-When creating a new workspace, a new or existing Data Lake Storage Gen2 account needs to be attached to it. Credentials for access to the workspace's SQL pool will also be generated at creation. I will keep the dataset in ```nyc-taxi-data``` container, created in the workspace attached storage account.
+When creating a new workspace, a new or existing Data Lake Storage Gen2 account needs to be attached to it. Credentials for access to the workspace's SQL pool will also be generated at creation. I will keep the dataset in ```nyc-taxi-data``` container.
 
 We can access the container in Synapse Studio. Raw dataset will be uploaded to the ```raw``` folder.
 
