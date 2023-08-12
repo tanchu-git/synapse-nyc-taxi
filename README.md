@@ -1,1 +1,1 @@
-# synapse_nyc_taxi
+# Azure Synapse Analytics NYC Taxi Project
