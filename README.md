@@ -71,7 +71,7 @@ FROM
     )
     AS [result]
 ```
-### The dataset comes in varous file formats like ```JSON```, ```PARQUET``` and ```DELTA```. Explorations with these formats can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
+### The dataset comes in varous file formats like ```JSON```, ```PARQUET``` and ```DELTA```. Exploration with these formats and data quality can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Discovery
 
