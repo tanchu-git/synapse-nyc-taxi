@@ -121,8 +121,6 @@ ORDER BY number_of_trips DESC;
 ## Data Virtualization
 Utilizing a logical data layer, allows me to combine data from multiple sources at query time without having to load the data from ETL pipelines. An external table points to data located in Azure Storage blob. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
 
-When using serverless SQL pool, CETAS is used to create an external table and *export* query results to Azure Storage Blob. So *silver* and *gold* tables will be using ```CREATE EXTERNAL TABLE AS SELECT``` clause.
-
 First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
 
 Now the bronze table.
@@ -147,7 +145,10 @@ CREATE EXTERNAL TABLE bronze.taxi_zone
         REJECTED_ROW_LOCATION = 'rejections/taxi_zone'
     );
 ```
-Using bronze table to ingest data as parquet format into the silver schema.
+## Data Ingestion
+When using serverless SQL pool, CETAS is used to create an external table and *export* query results to Azure Storage Blob. So *silver* and *gold* tables will be using ```CREATE EXTERNAL TABLE AS SELECT``` clause.
+
+Using bronze table to create table in silver schema, and ingest data as parquet format into the silver folder in my blob container.
 ```sql
 USE nyc_taxi_ldw;
 
