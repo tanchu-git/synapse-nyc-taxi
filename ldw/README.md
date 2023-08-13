@@ -1,5 +1,5 @@
 ### There are some tables created with partitions in mind, using [```STORED PROCEDURE```](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw/stored_procedure).
-Example - 
+Here I partition with year and month parameters. 
 ```sql
 USE nyc_taxi_ldw
 GO
@@ -51,19 +51,8 @@ BEGIN
     EXEC sp_executesql @drop_sql_statement;
 END;
 ```
-And the execution.
+And the execution to tranform into parquet files with partitions, with manual input of parameters year and month.
 ```sql
------------------------------------------------------------
--- execute the stored procedure to tranform into parquet files with partitions
------------------------------------------------------------
-EXEC silver.sp_silver_trip_data_green '2020', '01';
-EXEC silver.sp_silver_trip_data_green '2020', '02';
-EXEC silver.sp_silver_trip_data_green '2020', '03';
-EXEC silver.sp_silver_trip_data_green '2020', '04';
-EXEC silver.sp_silver_trip_data_green '2020', '05';
-EXEC silver.sp_silver_trip_data_green '2020', '06';
-EXEC silver.sp_silver_trip_data_green '2020', '07';
-EXEC silver.sp_silver_trip_data_green '2020', '08';
 EXEC silver.sp_silver_trip_data_green '2020', '09';
 EXEC silver.sp_silver_trip_data_green '2020', '10';
 EXEC silver.sp_silver_trip_data_green '2020', '11';
@@ -71,7 +60,7 @@ EXEC silver.sp_silver_trip_data_green '2020', '12';
 EXEC silver.sp_silver_trip_data_green '2021', '01';
 EXEC silver.sp_silver_trip_data_green '2021', '02';
 EXEC silver.sp_silver_trip_data_green '2021', '03';
-EXEC silver.sp_silver_trip_data_green '2021', '04';
-EXEC silver.sp_silver_trip_data_green '2021', '05';
-EXEC silver.sp_silver_trip_data_green '2021', '06';
 ```
+Visualization.
+
+![Screenshot 2023-08-14 005319](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/6b376df5-d689-4193-9196-913238b00997)
