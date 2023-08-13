@@ -116,7 +116,7 @@ ORDER BY number_of_trips DESC;
 ```
 ![Screenshot 2023-08-13 225327](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/18c5a5c0-9e02-4983-9889-f5dc73a7876a) ![Screenshot 2023-08-13 225550](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/cd5763cd-ded8-41f7-bda8-6f9251519dbd)
 
-More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
+### More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Virtualization
 Utilizing a logical data layer, allows me to combine data from multiple sources at query time without having to load the data from ETL pipelines. An external table points to data located in Azure Storage blob. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
@@ -165,3 +165,4 @@ AS
 SELECT *
     FROM bronze.taxi_zone;
 ```
+### More tables creation and ingestion can be found [ldw folder]()
