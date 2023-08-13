@@ -16,7 +16,7 @@ We can access the container in Synapse Studio. Raw dataset will be uploaded to t
 
 ![Screenshot 2023-08-12 231137](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/ed959054-3b84-448c-8517-fe5d1d878278)
 
-## Data Discovery
+## Data Exploration
 Checking for headers and other characteristics of the dataset. 
 ```sql
 SELECT
@@ -117,3 +117,51 @@ ORDER BY number_of_trips DESC;
 ![Screenshot 2023-08-13 225327](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/18c5a5c0-9e02-4983-9889-f5dc73a7876a) ![Screenshot 2023-08-13 225550](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/cd5763cd-ded8-41f7-bda8-6f9251519dbd)
 
 More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
+
+## Data Virtualization
+Utilizing a logical data layer, allows me to combine data from multiple sources at query time without having to load the data from ETL pipelines. An external table points to data located in Azure Storage blob. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
+
+When using serverless SQL pool, CETAS is used to create an external table and *export* query results to Azure Storage Blob. So *silver* and *gold* tables will be using ```CREATE EXTERNAL TABLE AS SELECT``` clause.
+
+First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
+
+Now the bronze table.
+```sql
+USE nyc_taxi_ldw;
+
+IF OBJECT_ID('bronze.taxi_zone') IS NOT NULL
+    DROP EXTERNAL TABLE bronze.taxi_zone;
+
+CREATE EXTERNAL TABLE bronze.taxi_zone
+    (
+        location_id SMALLINT,
+        borough VARCHAR(15),
+        zone VARCHAR(50),
+        service_zone VARCHAR(15)
+    )
+    WITH (
+        LOCATION = 'raw/taxi_zone.csv',
+        DATA_SOURCE = nyc_taxi_ext_source, -- points to my blob containing the raw data
+        FILE_FORMAT = csv_file_format, -- defines the file format
+        REJECT_VALUE = 10,
+        REJECTED_ROW_LOCATION = 'rejections/taxi_zone'
+    );
+```
+Using bronze table to ingest data as parquet format into the silver schema.
+```sql
+USE nyc_taxi_ldw;
+
+IF OBJECT_ID('silver.taxi_zone') IS NOT NULL
+    DROP EXTERNAL TABLE silver.taxi_zone
+GO
+
+CREATE EXTERNAL TABLE silver.taxi_zone
+    WITH (
+        LOCATION = 'silver/taxi_zone',
+        DATA_SOURCE = nyc_taxi_ext_source,
+        FILE_FORMAT = parquet_file_format -- exporting data as parquet
+    )
+AS
+SELECT *
+    FROM bronze.taxi_zone;
+```
