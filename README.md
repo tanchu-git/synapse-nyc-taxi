@@ -167,3 +167,5 @@ SELECT *
     FROM bronze.taxi_zone;
 ```
 ### More tables creation and ingestion can be found in the [ldw folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw)
+
+## Data Transformation
