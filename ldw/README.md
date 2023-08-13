@@ -51,7 +51,7 @@ BEGIN
     EXEC sp_executesql @drop_sql_statement;
 END;
 ```
-And the execution to tranform into parquet files with partitions, with manual input of parameters year and month.
+And the execution to tranform into parquet files with partitions. Manual input of parameters year and month.
 ```sql
 EXEC silver.sp_silver_trip_data_green '2020', '09';
 EXEC silver.sp_silver_trip_data_green '2020', '10';
