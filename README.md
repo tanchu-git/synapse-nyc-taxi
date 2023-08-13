@@ -16,7 +16,7 @@ We can access the container in Synapse Studio. Raw dataset will be uploaded to t
 
 ![Screenshot 2023-08-12 231137](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/ed959054-3b84-448c-8517-fe5d1d878278)
 
-## Data Exploration
+## Data Discovery
 Checking for headers and other characteristics of the dataset. 
 ```sql
 SELECT
@@ -71,11 +71,10 @@ FROM
     )
     AS [result]
 ```
-### The dataset comes in varous file formats like ```JSON```, ```PARQUET``` and ```DELTA```. Exploration with these formats and data quality can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
+### The dataset comes in varous file formats like ```JSON```, ```PARQUET``` and ```DELTA```. More exploration can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Discovery
-
-
+Checking for null records.
 ```sql
 SELECT
     TOP 100 *
@@ -87,7 +86,7 @@ FROM
     ) AS trip_data_green_parquet
 WHERE PULocationID is NULL; -- query returns nothing if there are no nulls
 ```
-
+The ```trip_data``` table have got the ```PULocationID``` column and not the ```borough``` column. While ```taxi_zone``` have got both columns. Joining these two tables, to identify number of trips made from each borough.
 ```sql
 SELECT 
     taxi_zone.borough,
@@ -115,3 +114,6 @@ ON trip_data.PULocationID = taxi_zone.location_id
 GROUP BY taxi_zone.borough
 ORDER BY number_of_trips DESC;
 ```
+![Screenshot 2023-08-13 225327](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/18c5a5c0-9e02-4983-9889-f5dc73a7876a) ![Screenshot 2023-08-13 225550](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/cd5763cd-ded8-41f7-bda8-6f9251519dbd)
+
+More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
