@@ -1,5 +1,5 @@
 ### There are some tables created with partitions in mind, using [```STORED PROCEDURE```](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw/stored_procedure).
-Here I partition with year and month parameters. 
+```WHERE``` clause is not available with external tables. So I am using a ```VIEW``` of ```trip_data_green_csv``` to enable the ```WHERE``` clause, with year and month parameters. 
 ```sql
 USE nyc_taxi_ldw
 GO
