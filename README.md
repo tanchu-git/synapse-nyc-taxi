@@ -14,7 +14,7 @@ When creating a new workspace, a new or existing Data Lake Storage Gen2 account 
 
 We can access the container in Synapse Studio. Raw dataset will be uploaded to the ```raw``` folder.
 
-![Screenshot 2023-08-12 231137](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/ed959054-3b84-448c-8517-fe5d1d878278)
+![260260798-ed959054-3b84-448c-8517-fe5d1d878278](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/16abe617-2ecf-4e45-87f2-ebfc3793e104)
 
 ## Data Exploration
 Checking for headers and other characteristics of the dataset. 
