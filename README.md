@@ -190,8 +190,6 @@ SELECT trip_data.year,
         ON calendar.date = CONVERT(DATE, trip_data.lpep_pickup_datetime)
     JOIN silver.payment_type
         ON trip_data.payment_type = payment_type.payment_type
-WHERE trip_data.year = '2020' 
-  AND trip_data.month = '01'
 GROUP BY trip_data.year, 
          trip_data.month, 
          taxi_zone.borough,
@@ -204,10 +202,10 @@ Gold table query result.
 
 To improve the performance of the query, I created a [stored procedure](https://github.com/tanchu-git/synapse_nyc_taxi/blob/main/ldw/stored_procedure/02_sp_gold_trip_data_green.sql) to partition the data by year and month.
 ## Automated pipeline
-Data Analysts will want the newest data to work with. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones. Same procedure, going from silver to gold.
+Data Analysts will want the data up to date. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones with the stored query. Same procedure, going from silver to gold.
 
 ![Screenshot 2023-08-15 002226](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c2ea85e9-1dde-4665-8244-ad2bc7b376ee)
 
-Linking these two pipelines. Gold tables will be updated, whenever new data gets added through the bronze layer.
+Linking these two pipelines. Gold layer will stay up to date, as new data gets added through the bronze layer.
 
 ![Screenshot 2023-08-15 003214](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c9eb57bc-c50c-4bf7-ac36-85723a22d331)
