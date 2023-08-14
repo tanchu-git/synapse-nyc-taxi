@@ -171,37 +171,37 @@ SELECT *
 ### More tables creation and ingestion can be found in the [ldw folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw)
 
 ## Data Transformation
-Now that the data is prepared, transformations can now be run to extract business value - like payment behaviour. Do people prefer card or cash payment? Does that preference change over the weekend and between boroughs? Let's find out with some ```JOIN``` clauses.
+Now that the data is prepared, transformations can now be run to extract business value - like payment behaviour. Do people prefer card or cash payment? Does that preference change over the weekend and between boroughs? Let's find out with some ```JOIN``` clauses and filter/aggregate the columns I need.
 ```sql
 USE nyc_taxi_ldw;
 
-SELECT td.year, 
-       td.month, 
-       tz.borough,
-       CONVERT(DATE, td.lpep_pickup_datetime) AS trip_date,
-       cal.day_name AS trip_day,       
-       CASE WHEN cal.day_name IN ('Saturday', 'Sunday') THEN 'Y' ELSE 'N' END AS is_weekend,
-       SUM(CASE WHEN pt.description = 'Credit card' THEN 1 ELSE 0 END) AS card_trip_count,
-       SUM(CASE WHEN pt.description = 'Cash' THEN 1 ELSE 0 END) AS cash_trip_count,
-       SUM(CASE WHEN tt.trip_type_desc = 'Dispatch' THEN 1 ELSE 0 END) AS dispatch_trip_count,
-       SUM(CASE WHEN tt.trip_type_desc = 'Street-hail' THEN 1 ELSE 0 END) AS street_hail_trip_count,
-       SUM(td.fare_amount) AS fare_amount,
-       SUM(td.trip_distance) AS trip_distance,
-       SUM(DATEDIFF(MINUTE, td.lpep_pickup_datetime, td.lpep_dropoff_datetime)) AS trip_duration
-    FROM silver.view_trip_data_green td
-    JOIN silver.taxi_zone tz 
-        ON td.pu_location_id = tz.location_id
-    JOIN silver.calendar cal
-        ON cal.date = CONVERT(DATE, td.lpep_pickup_datetime)
-    JOIN silver.payment_type pt
-        ON td.payment_type = pt.payment_type
-    JOIN silver.trip_type tt
-        ON td.trip_type = tt.trip_type
-WHERE td.year = '2021' 
-  AND td.month = '01'
-GROUP BY td.year, 
-         td.month, 
-         tz.borough,
-         CONVERT(DATE, td.lpep_pickup_datetime),
-         cal.day_name
+SELECT trip_data.year, 
+       trip_data.month, 
+       taxi_zone.borough,
+       CONVERT(DATE, trip_data.lpep_pickup_datetime) AS trip_date,
+       calendar.day_name AS trip_day,       
+       CASE WHEN calendar.day_name IN ('Saturday', 'Sunday') THEN 'Y' ELSE 'N' END AS is_weekend,
+       SUM(CASE WHEN payment_type.description = 'Credit card' THEN 1 ELSE 0 END) AS card_trip_count,
+       SUM(CASE WHEN payment_type.description = 'Cash' THEN 1 ELSE 0 END) AS cash_trip_count,
+       SUM(CASE WHEN trip_type.trip_type_desc = 'Dispatch' THEN 1 ELSE 0 END) AS dispatch_trip_count,
+       SUM(CASE WHEN trip_type.trip_type_desc = 'Street-hail' THEN 1 ELSE 0 END) AS street_hail_trip_count,
+       SUM(trip_data.fare_amount) AS fare_amount,
+       SUM(trip_data.trip_distance) AS trip_distance,
+       SUM(DATEDIFF(MINUTE, trip_data.lpep_pickup_datetime, trip_data.lpep_dropoff_datetime)) AS trip_duration
+    FROM silver.view_trip_data_green trip_data
+    JOIN silver.taxi_zone 
+        ON trip_data.pu_location_id = taxi_zone.location_id
+    JOIN silver.calendar
+        ON calendar.date = CONVERT(DATE, trip_data.lpep_pickup_datetime)
+    JOIN silver.payment_type
+        ON trip_data.payment_type = payment_type.payment_type
+    JOIN silver.trip_type
+        ON trip_data.trip_type = trip_type.trip_type
+WHERE trip_data.year = '2021' 
+  AND trip_data.month = '01'
+GROUP BY trip_data.year, 
+         trip_data.month, 
+         taxi_zone.borough,
+         CONVERT(DATE, trip_data.lpep_pickup_datetime),
+         calendar.day_name
 ```
