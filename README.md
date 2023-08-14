@@ -208,6 +208,6 @@ Data Analysts will want the newest data to work with. For that I created pipelin
 
 ![Screenshot 2023-08-15 002226](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c2ea85e9-1dde-4665-8244-ad2bc7b376ee)
 
-Linking these two pipelines. Analyst ready gold tables will be ready whenever new data gets added through the bronze layer.
+Linking these two pipelines. Gold tables will be updated, whenever new data gets added through the bronze layer.
 
 ![Screenshot 2023-08-15 003214](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c9eb57bc-c50c-4bf7-ac36-85723a22d331)
