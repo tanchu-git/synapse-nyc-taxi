@@ -119,7 +119,7 @@ ORDER BY number_of_trips DESC;
 ### More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Virtualization
-Serverless SQL pool has no local storage, only metadata objects are stored in databases. Creating a logical data warehouse, allows me to combine data from multiple sources and save query results for downstream use, without having to load the data from ETL pipelines. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. External tables points to data located in a data lake.
+Serverless SQL pool has no local storage, only metadata objects are stored in databases. Creating a logical data warehouse, allows me to combine data from multiple sources and save query results for downstream use without having to load data from ETL pipelines. The raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. External tables points to data located in a data lake.
 
 First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
 
