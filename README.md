@@ -12,12 +12,12 @@ The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) wer
 ## Synapse Workspace and Raw Dataset
 When creating a new workspace, a new or existing Data Lake Storage Gen2 account needs to be attached to it. I created the ```nyc-taxi-data``` container in the attached storage account, to store the dataset. Credentials for access to the workspace's SQL pool will also be generated at creation. 
 
-We can access the container in Synapse Studio. Raw dataset will be uploaded to the ```raw``` folder.
+Basic discovery and exploration of the data in various formats (Parquet, CSV, JSON) will be done with Synapse Serverless SQL pool, so I can plan how to extract insights from it. With access to the container in Synapse Studio, raw dataset will be uploaded to the ```raw``` folder.
 
 ![260260798-ed959054-3b84-448c-8517-fe5d1d878278](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/16abe617-2ecf-4e45-87f2-ebfc3793e104)
 
 ## Data Exploration
-Checking for headers and other characteristics of the dataset. 
+Checking for headers and other characteristics of the dataset.
 ```sql
 SELECT
     TOP 100 *
@@ -119,7 +119,7 @@ ORDER BY number_of_trips DESC;
 ### More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Virtualization
-Utilizing a logical data layer, allows me to combine data from multiple sources at query time without having to load the data from ETL pipelines. An external table points to data located in Azure Storage blob. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
+Serverless SQL pool has no local storage, only metadata objects are stored in databases. Creating a logical data warehouse, allows me to combine data from multiple sources and save query results for downstream use, without having to load the data from ETL pipelines. Since the raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. External tables points to data located in a data lake.
 
 First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
 
@@ -146,7 +146,7 @@ CREATE EXTERNAL TABLE bronze.taxi_zone
     );
 ```
 ## Data Ingestion
-When using serverless SQL pool, CETAS is used to create an external table and *export* query results to Azure Storage Blob. So *silver* and *gold* tables will be using ```CREATE EXTERNAL TABLE AS SELECT``` clause.
+When using serverless SQL pool, CETAS is used to create an external table and *export* query results to an external storage. So *silver* and *gold* tables will be using ```CREATE EXTERNAL TABLE AS SELECT``` clause.
 
 Using bronze table to create table in silver schema, and ingest data as parquet format into the silver folder in my blob container.
 ```sql
