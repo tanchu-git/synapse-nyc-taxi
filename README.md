@@ -201,3 +201,13 @@ GROUP BY trip_data.year,
 Gold table query result.
 
 ![Screenshot 2023-08-14 231229](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/be24b590-9f90-47a0-8064-879f0ec1b6d5)
+
+To improve the performance of the query, I created a [stored procedure](https://github.com/tanchu-git/synapse_nyc_taxi/blob/main/ldw/stored_procedure/02_sp_gold_trip_data_green.sql) to partition the data by year and month.
+## Automated pipeline
+Data Analysts will want the newest data to work with. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones. Same procedure, going from silver to gold.
+
+![Screenshot 2023-08-15 002226](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c2ea85e9-1dde-4665-8244-ad2bc7b376ee)
+
+Linking these two pipelines. Analyst ready gold tables will be ready whenever new data gets added through the bronze layer.
+
+![Screenshot 2023-08-15 003214](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c9eb57bc-c50c-4bf7-ac36-85723a22d331)
