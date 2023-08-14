@@ -206,6 +206,6 @@ Data Analysts will want the data up to date. For that I created pipelines that r
 
 ![Screenshot 2023-08-15 002226](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c2ea85e9-1dde-4665-8244-ad2bc7b376ee)
 
-Linking these two pipelines. Gold layer will stay up to date, as new data gets added through the bronze layer.
+Some silver tables require different pipeline design, so there will be two pipeline designs for silver layer. Linking these pipelines. Gold layer will stay up to date, as new data gets added through the bronze layer.
 
-![Screenshot 2023-08-15 003214](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c9eb57bc-c50c-4bf7-ac36-85723a22d331)
+![Screenshot 2023-08-15 012506](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/fa4b5c3e-82cc-4c88-ac49-1c6ccad4c313)
