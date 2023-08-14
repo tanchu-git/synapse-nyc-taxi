@@ -171,3 +171,37 @@ SELECT *
 ### More tables creation and ingestion can be found in the [ldw folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw)
 
 ## Data Transformation
+Now that the data is prepared, transformations can now be run to extract business value - like payment behaviour. Do people prefer card or cash payment? Does that preference change over the weekend and between boroughs? Let's find outh with some ```JOIN``` clauses.
+```sql
+USE nyc_taxi_ldw;
+
+SELECT td.year, 
+       td.month, 
+       tz.borough,
+       CONVERT(DATE, td.lpep_pickup_datetime) AS trip_date,
+       cal.day_name AS trip_day,       
+       CASE WHEN cal.day_name IN ('Saturday', 'Sunday') THEN 'Y' ELSE 'N' END AS is_weekend,
+       SUM(CASE WHEN pt.description = 'Credit card' THEN 1 ELSE 0 END) AS card_trip_count,
+       SUM(CASE WHEN pt.description = 'Cash' THEN 1 ELSE 0 END) AS cash_trip_count,
+       SUM(CASE WHEN tt.trip_type_desc = 'Dispatch' THEN 1 ELSE 0 END) AS dispatch_trip_count,
+       SUM(CASE WHEN tt.trip_type_desc = 'Street-hail' THEN 1 ELSE 0 END) AS street_hail_trip_count,
+       SUM(td.fare_amount) AS fare_amount,
+       SUM(td.trip_distance) AS trip_distance,
+       SUM(DATEDIFF(MINUTE, td.lpep_pickup_datetime, td.lpep_dropoff_datetime)) AS trip_duration
+    FROM silver.view_trip_data_green td
+    JOIN silver.taxi_zone tz 
+        ON td.pu_location_id = tz.location_id
+    JOIN silver.calendar cal
+        ON cal.date = CONVERT(DATE, td.lpep_pickup_datetime)
+    JOIN silver.payment_type pt
+        ON td.payment_type = pt.payment_type
+    JOIN silver.trip_type tt
+        ON td.trip_type = tt.trip_type
+WHERE td.year = '2021' 
+  AND td.month = '01'
+GROUP BY td.year, 
+         td.month, 
+         tz.borough,
+         CONVERT(DATE, td.lpep_pickup_datetime),
+         cal.day_name
+```
