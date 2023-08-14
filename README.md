@@ -171,7 +171,7 @@ SELECT *
 ### More tables creation and ingestion can be found in the [ldw folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw)
 
 ## Data Transformation
-Now that the data is prepared, transformations can now be done to extract business value - like payment behaviour. Do people prefer card or cash payment? Does the preference change over the weekend and between boroughs? Let's find out with some ```JOIN``` clauses and aggregate functions.
+Now that the data is prepared, transformations can begin to extract business value - like payment behaviour. Do people prefer card or cash payment? Does the preference change over the weekend and between boroughs? Let's find out with some ```JOIN``` clauses and aggregate functions.
 ```sql
 USE nyc_taxi_ldw;
 
