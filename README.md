@@ -16,7 +16,7 @@ With access to the container in Synapse Studio, raw dataset will be uploaded to 
 
 ![260260798-ed959054-3b84-448c-8517-fe5d1d878278](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/16abe617-2ecf-4e45-87f2-ebfc3793e104)
 
-Before I can extract insights from the dataset, basic discovery and exploration of the data in various formats (Parquet, CSV, JSON) will be done with Serverless SQL pool.
+#### Before I can extract insights from the dataset, basic discovery and exploration of the data in various formats (Parquet, CSV, JSON) will be done with Serverless SQL pool.
 
 ## Data Exploration
 Checking for headers and other characteristics of the dataset.
@@ -220,4 +220,4 @@ Covid hit really hard during the first quarter of 2020.
 ## Dedicated SQL Pool
 Dedicated SQL pool stores data internally, in relational tables with columnar storage. Once data is stored, you can run analytics at massive scale with its distributed query engine using T-SQL. I have only been using Serverless SQL Pool to work with, since it is better suited for small datasets. 
 
-If the dataset ever grows to a size where a Dedicated SQL Pool would make sense, it is quite simple to copy data from external storage into Dedicated SQL Pool.
+If the dataset ever grows to a size where a Dedicated SQL Pool would make sense, [here](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/dwh) are some methods to copy data from external storage into Dedicated SQL Pool.
