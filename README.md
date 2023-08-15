@@ -200,7 +200,7 @@ Gold table query result.
 
 ![Screenshot 2023-08-14 231229](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/be24b590-9f90-47a0-8064-879f0ec1b6d5)
 
-To improve the performance of the query, I created a [stored procedure](https://github.com/tanchu-git/synapse_nyc_taxi/blob/main/ldw/stored_procedure/02_sp_gold_trip_data_green.sql) to partition the data by year and month.
+To improve the performance of the query, I created a [stored procedure](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/ldw#there-are-some-tables-created-with-partitions-in-mind-using-stored-procedure) to partition the data by year and month.
 ## Automated pipeline
 Data consumers will want the data up to date. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones with the stored query. Same procedure, going from silver to gold.
 
