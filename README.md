@@ -216,3 +216,8 @@ Synapse Studio offers a seamless way to connect a Power BI workspace to an Azure
 ![Screenshot 2023-08-15 220652](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/d52de5c6-bda2-4152-8705-acaedc430b7c)
 
 Covid hit really hard during the first quarter of 2020.
+
+## Dedicated SQL Pool
+Dedicated SQL pool stores data internally, in relational tables with columnar storage. Once data is stored, you can run analytics at massive scale with its distributed query engine using T-SQL. I have only been using Serverless SQL Pool to work with, since it is better suited for small datasets. 
+
+If the dataset ever grows to a size where a Dedicated SQL Pool would make sense, it is quite simple to copy data from external storage into Dedicated SQL Pool.
