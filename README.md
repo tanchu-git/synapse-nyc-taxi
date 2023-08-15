@@ -4,7 +4,7 @@ Data discovery, ingestion and transformation of the dataset will be done with Az
 ![Screenshot 2023-08-12 003049](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/b22aa5d5-eaf2-4a11-8278-826a18e8b76c)
 
 ## TLC Trip Record Data
-The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) were collected and provided by technology providers, authorized by the NYC Taxi and Limousine Commission (TLC) . They feature fields like *pick-up and drop-off locations*, *trip distances*, *itemized fares*, *rate types*, *payment types* and many more.
+The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) were collected and provided by technology providers, authorized by the NYC Taxi and Limousine Commission (TLC) . They feature fields like *pick-up and drop-off locations*, *trip distances*, *rate types*, *payment types* and many more.
 
 #### Data Model
 ![260258628-c96324e3-f449-49e5-b22c-e500deeb7572](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/55d92ac5-c0c7-458a-b073-4fa59e9c0ff5)
@@ -123,7 +123,7 @@ ORDER BY number_of_trips DESC;
 ## Data Virtualization
 Serverless SQL pool has no local storage, only metadata objects are stored in database. The raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
 
-First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
+First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects.
 
 Now the bronze table. External tables points to data located in a data lake.
 ```sql
