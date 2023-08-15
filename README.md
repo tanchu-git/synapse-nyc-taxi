@@ -4,7 +4,7 @@ Data discovery, ingestion and transformation of the dataset will be done with Az
 ![Screenshot 2023-08-12 003049](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/b22aa5d5-eaf2-4a11-8278-826a18e8b76c)
 
 ## TLC Trip Record Data
-The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) were collected and provided by technology providers, authorized by the NYC Taxi and Limousine Commission (TLC) . Yellow and green taxi trip records include fields capturing pick-up and drop-off dates/times, pick-up and drop-off locations, trip distances, itemized fares, rate types, payment types, and driver-reported passenger counts.
+The [datasets](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) were collected and provided by technology providers, authorized by the NYC Taxi and Limousine Commission (TLC) . They feature fields like *pick-up and drop-off locations*, *trip distances*, *itemized fares*, *rate types*, *payment types* and many more.
 
 #### Data Model
 ![260258628-c96324e3-f449-49e5-b22c-e500deeb7572](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/55d92ac5-c0c7-458a-b073-4fa59e9c0ff5)
@@ -121,7 +121,7 @@ ORDER BY number_of_trips DESC;
 ### More discovery can be found in the [discovery folder](https://github.com/tanchu-git/synapse_nyc_taxi/tree/main/discovery).
 
 ## Data Virtualization
-Serverless SQL pool has no local storage, only metadata objects are stored in databases. I can save the query results in a logical data warehouse for quick downstream useage. The raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
+Serverless SQL pool has no local storage, only metadata objects are stored in database. The raw dataset is already present in my blob container, ```CREATE EXTERNAL TABLE``` clause will be used to create the *bronze* tables. 
 
 First I create my logical data warehouse as database ```nyc_taxi_ldw``` with three schemas - ```bronze```, ```silver``` and ```gold```. Next is my external data source object ```nyc_taxi_ext_source``` and external file format objects  ```csv_file_format```, ```tsv_file_format```, ```parquet_file_format``` and ```delta_file_format```.
 
@@ -211,3 +211,8 @@ Some silver tables require a different pipeline design, so there will be two pip
 ![Screenshot 2023-08-15 012506](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/fa4b5c3e-82cc-4c88-ac49-1c6ccad4c313)
 
 ## Power BI
+Synapse Studio offers a seamless way to connect a Power BI workspace to an Azure Synapse Analytics workspace, which makes it possible to create new Power BI reports from Synapse Studio.
+
+![Screenshot 2023-08-15 220652](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/d52de5c6-bda2-4152-8705-acaedc430b7c)
+
+Covid hit really hard during the first quarter of 2020.
