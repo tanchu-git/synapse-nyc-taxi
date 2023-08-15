@@ -202,10 +202,12 @@ Gold table query result.
 
 To improve the performance of the query, I created a [stored procedure](https://github.com/tanchu-git/synapse_nyc_taxi/blob/main/ldw/stored_procedure/02_sp_gold_trip_data_green.sql) to partition the data by year and month.
 ## Automated pipeline
-Data Analysts will want the data up to date. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones with the stored query. Same procedure, going from silver to gold.
+Data consumers will want the data up to date. For that I created pipelines that runs at an regular interval. It starts with a script to look up the bronze tables, deletes old silver partitions and finally create new ones with the stored query. Same procedure, going from silver to gold.
 
 ![Screenshot 2023-08-15 002226](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/c2ea85e9-1dde-4665-8244-ad2bc7b376ee)
 
-Some silver tables require a different pipeline design, so there will be two pipeline designs for silver layer. Linking these pipelines. Gold layer will stay up to date, as new data gets added through the bronze layer.
+Some silver tables require a different pipeline design, so there will be two pipeline designs for silver layer. Orchestrating these pipelines together. Gold layer will stay up to date, as new data gets added through the bronze layer.
 
 ![Screenshot 2023-08-15 012506](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/fa4b5c3e-82cc-4c88-ac49-1c6ccad4c313)
+
+## Power BI
