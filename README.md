@@ -215,6 +215,8 @@ Synapse Studio offers a seamless way to connect a Power BI workspace to an Azure
 
 ![Screenshot 2023-08-15 220652](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/d52de5c6-bda2-4152-8705-acaedc430b7c)
 
+![image](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/d638131e-82c5-4b69-8730-9e97b6f832d2)
+
 Covid hit really hard during the first quarter of 2020.
 
 ## Dedicated SQL Pool
