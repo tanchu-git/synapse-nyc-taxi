@@ -1,4 +1,5 @@
 # Azure Synapse Analytics NYC Taxi Project
+
 Data discovery, ingestion and transformation of the dataset will be done with Azure Synapse Analytics platform.
 
 ## Architecture
