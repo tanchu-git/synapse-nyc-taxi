@@ -1,6 +1,7 @@
 # Azure Synapse Analytics NYC Taxi Project
 Data discovery, ingestion and transformation of the dataset will be done with Azure Synapse Analytics platform.
 
+## Solution Architecture
 ![Screenshot 2023-08-12 003049](https://github.com/tanchu-git/synapse_nyc_taxi/assets/139019601/b22aa5d5-eaf2-4a11-8278-826a18e8b76c)
 
 ## TLC Trip Record Data
